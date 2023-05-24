@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class Search {
 
-    @GetMapping("/search")
+    @GetMapping("/search/{word}")
     public String recent(){
         return "/search/index";
+    }
+
+    @GetMapping("/search/")
+    public String empty(){
+        return "index";
     }
 }
