@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.logging.Logger;
 
-@Configuration
 public class CommandLineRunnerIml implements CommandLineRunner {
 
     EntityManagerFactory entityManagerFactory;

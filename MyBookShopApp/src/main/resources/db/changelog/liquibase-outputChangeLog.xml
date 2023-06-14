@@ -37,10 +37,10 @@
         <createSequence sequenceName="book_review_like_id_seq"/>
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-13">
-        <createSequence sequenceName="books_id_seq"/>
+        <createSequence sequenceName="book_id_seq"/>
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-14">
-        <createSequence sequenceName="books_id_seq1"/>
+        <createSequence sequenceName="book_id_seq1"/>
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-15">
         <createSequence sequenceName="document_id_seq"/>
@@ -56,9 +56,6 @@
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-19">
         <createSequence sequenceName="message_id_seq"/>
-    </changeSet>
-    <changeSet author="alexa (generated)" id="1686608437711-20">
-        <createSequence sequenceName="test_entities_id_seq"/>
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-21">
         <createSequence sequenceName="user_contact_id_seq"/>
@@ -89,32 +86,10 @@
             <column name="name" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet author="alexa (generated)" id="1686608437711-25">
-        <createTable tableName="balance_transaction">
-            <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="balance_transaction_pkey"/>
-            </column>
-            <column name="book_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="time" type="TIMESTAMP(29) WITHOUT TIME ZONE">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column defaultValueNumeric="0" name="value" type="INT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-26">
-        <createTable tableName="book">
+        <createTable tableName="books">
             <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="book_pkey"/>
+                <constraints primaryKey="true" primaryKeyName="books_pkey"/>
             </column>
             <column name="description" type="VARCHAR(255)"/>
             <column defaultValueNumeric="0" name="discount" type="SMALLINT">
@@ -139,6 +114,29 @@
             <column name="author_id" type="INT"/>
         </createTable>
     </changeSet>
+    <changeSet author="alexa (generated)" id="1686608437711-25">
+        <createTable tableName="balance_transaction">
+            <column autoIncrement="true" name="id" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="balance_transaction_pkey"/>
+            </column>
+            <column name="book_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time" type="timestamptz">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="value" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
     <changeSet author="alexa (generated)" id="1686608437711-27">
         <createTable tableName="book2author">
             <column autoIncrement="true" name="id" type="SERIAL">
@@ -176,7 +174,7 @@
             <column name="book_id" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="time" type="TIMESTAMP(29) WITHOUT TIME ZONE">
+            <column name="time" type="timestamptz">
                 <constraints nullable="false"/>
             </column>
             <column name="type_id" type="INT">
@@ -238,7 +236,7 @@
             <column name="text" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="time" type="TIMESTAMP(29) WITHOUT TIME ZONE">
+            <column name="time" type="timestamptz">
                 <constraints nullable="false"/>
             </column>
             <column name="user_id" type="INT">
@@ -254,7 +252,7 @@
             <column name="review_id" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="time" type="TIMESTAMP(29) WITHOUT TIME ZONE">
+            <column name="time" type="timestamptz">
                 <constraints nullable="false"/>
             </column>
             <column name="user_id" type="INT">
@@ -266,9 +264,9 @@
         </createTable>
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-35">
-        <createTable tableName="books">
+        <createTable tableName="book">
             <column autoIncrement="true" name="id" type="SERIAL">
-                <constraints primaryKey="true" primaryKeyName="books_pkey"/>
+                <constraints primaryKey="true" primaryKeyName="book_pkey"/>
             </column>
             <column name="price" type="VARCHAR(255)"/>
             <column name="price_old" type="VARCHAR(255)"/>
@@ -356,18 +354,10 @@
             <column name="text" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="time" type="TIMESTAMP(29) WITHOUT TIME ZONE">
+            <column name="time" type="timestamptz">
                 <constraints nullable="false"/>
             </column>
             <column name="user_id" type="INT"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="alexa (generated)" id="1686608437711-41">
-        <createTable tableName="test_entities">
-            <column autoIncrement="true" name="id" type="BIGSERIAL">
-                <constraints primaryKey="true" primaryKeyName="test_entities_pkey"/>
-            </column>
-            <column name="data" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-42">
@@ -381,7 +371,7 @@
             <column name="code" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="code_time" type="TIMESTAMP(29) WITHOUT TIME ZONE"/>
+            <column name="code_time" type="timestamptz"/>
             <column name="code_trails" type="INT"/>
             <column name="contact" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -406,15 +396,147 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="reg_time" type="TIMESTAMP(29) WITHOUT TIME ZONE">
+            <column name="reg_time" type="timestamptz">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-44">
-        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="books" constraintName="fkfjixh2vym2cvfj3ufxj91jem7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors"/>
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book" constraintName="fkfjixh2vym2cvfj3ufxj91jem7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors"/>
     </changeSet>
     <changeSet author="alexa (generated)" id="1686608437711-45">
         <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book" constraintName="fkmxigqo4mngfn81gp30tjjdj58" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="authors"/>
+    </changeSet>
+    <changeSet  author="alexa (generated)" id="1686608437711-46">
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book"
+                                 constraintName="book_author_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="author"/>
+    </changeSet>
+    <changeSet  author="alexa (generated)" id="1686608437711-47">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="balance_transaction"
+                                 constraintName="balance_transaction_book_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="balance_transaction"
+                                 constraintName="balance_transaction_user_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="alexa (generated)" id="1686608437711-48">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2author"
+                                 constraintName="book2author_book_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book"/>
+        <addForeignKeyConstraint baseColumnNames="author_id" baseTableName="book2author"
+                                 constraintName="book2author_author_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="authors"/>
+    </changeSet>
+    <changeSet author="alexa (generated)" id="1686608437711-49">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2genre"
+                                 constraintName="book2genre_book_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book"/>
+        <addForeignKeyConstraint baseColumnNames="genre_id" baseTableName="book2genre"
+                                 constraintName="book2genre_genre_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="genre"/>
+    </changeSet>
+
+    <changeSet author="alexa (generated)" id="1686608437711-50">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book2user"
+                                 constraintName="book2user_book_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book2user"
+                                 constraintName="book2user_user_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="alexa (generated)" id="1686608437711-51">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="book_review"
+                                 constraintName="book_review_book_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review"
+                                 constraintName="book_review_user_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+    <changeSet author="alexa (generated)" id="1686608437711-52">
+        <addForeignKeyConstraint baseColumnNames="review_id" baseTableName="book_review_like"
+                                 constraintName="book_review_like_review_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book_review"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="book_review_like"
+                                 constraintName="book_review_like_user_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="alexa (generated)" id="1686608437711-53">
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="file_download"
+                                 constraintName="file_download_book_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="book"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="file_download"
+                                 constraintName="file_download_user_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="alexa (generated)" id="1686608437711-54">
+        <addForeignKeyConstraint baseColumnNames="parent_id" baseTableName="genre"
+                                 constraintName="genre_parent_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="genre"/>
+    </changeSet>
+    <changeSet author="alexa (generated)" id="1686608437711-55">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="message"
+                                 constraintName="message_user_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="alexa (generated)" id="1686608437711-56">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_contact"
+                                 constraintName="message_user_id_fk"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
     </changeSet>
 </databaseChangeLog>
