@@ -1,7 +1,7 @@
 package com.example.mybookshopapp.services;
 
-import com.example.mybookshopapp.data.dao.Author;
 import com.example.mybookshopapp.data.repositories.AuthorRepository;
+import com.example.mybookshopapp.struct.author.AuthorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public List<Author> getAuthorData(){
+    public List<AuthorEntity> getAuthorData(){
         return authorRepository.findAll();
     }
 }

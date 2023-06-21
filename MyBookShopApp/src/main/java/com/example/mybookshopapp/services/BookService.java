@@ -1,10 +1,12 @@
 package com.example.mybookshopapp.services;
 
-
-import com.example.mybookshopapp.data.dao.Author;
-import com.example.mybookshopapp.data.dao.Book;
 import com.example.mybookshopapp.data.repositories.BookRepository;
+import com.example.mybookshopapp.struct.author.AuthorEntity;
+import com.example.mybookshopapp.struct.book.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class BookService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Book> getBookData(){
+    public List<BookEntity> getBookData(){
         return bookRepository.findAll();
         /*List<Book> books = jdbcTemplate.query(("SELECT * " +
                 " FROM books "), (ResultSet rs, int rowNum) -> {
@@ -42,15 +44,50 @@ public class BookService {
         return new ArrayList<>(books);*/
     }
 
-    private Author getAuthorByAuthorId(int author_id) {
-        List<Author> authorEntities = jdbcTemplate.query(
+    private AuthorEntity getAuthorByAuthorId(int author_id) {
+        List<AuthorEntity> authorEntities = jdbcTemplate.query(
                 ("SELECT * FROM authors WHERE authors.id= " + author_id),
                 (ResultSet rs, int row) -> {
-                    Author Author = new Author();
+                    AuthorEntity Author = new AuthorEntity();
                     Author.setId(rs.getInt("id"));
                     Author.setName(rs.getString("name"));
                     return Author;
                 });
         return authorEntities.get(0);
+    }
+
+    //new book service methods
+
+    public List<BookEntity> getBooksByAuthor(String authorName){
+        return bookRepository.findBookEntitiesByAuthorNameContaining(authorName);
+    }
+
+    public List<BookEntity> getBooksByTitle(String title){
+        return bookRepository.findBookEntitiesByTitleContaining(title);
+    }
+
+    public List<BookEntity> getBooksWithPriceBetween(Integer minPrice, Integer maxPrice){
+        return bookRepository.findBookEntitiesByPriceBetween(minPrice, maxPrice);
+    }
+
+    public List<BookEntity> getBooksWithPrice(Integer price){
+        return bookRepository.findBookEntitiesByPriceIs(price);
+    }
+
+    public List<BookEntity> getBooksWithMaxDiscount(){
+        return bookRepository.getBooksWithMaxDiscount();
+    }
+    public List<BookEntity> getBestsellers(){
+        return bookRepository.getBestsellers();
+    }
+
+    public Page<BookEntity> getPageOfRecommendedBooks(Integer offset, Integer limit){
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAll(nextPage);
+    }
+
+    public Page<BookEntity> getPageOfSearchResultsBooks(String searchWord, Integer offset, Integer limit){
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findBookEntitiesByTitleContaining(searchWord, nextPage);
     }
 }
