@@ -60,7 +60,7 @@
         <div class="Authors-block" th:each="authorEntity: ${authorData}">
           <h2 class="Authors-title" th:id="${authorEntity.key}" th:text="${authorEntity.key}">А</h2>
           <div class="Authors-letter">
-            <div th:each="auth: ${authorEntity.value}"class="Authors-item"><a href="/authors/slug.html" th:text="${auth}">Абгарян Наринэ</a></div>
+            <div th:each="auth: ${authorEntity.value}"class="Authors-item"><a th:href="@{/authors/slug/{authorSlug}(authorSlug=${auth.value})}" th:text="${auth.key}">Абгарян Наринэ</a></div>
           </div>
         </div>
       </div>

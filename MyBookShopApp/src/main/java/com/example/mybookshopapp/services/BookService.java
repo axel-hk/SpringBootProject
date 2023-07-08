@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -89,5 +91,26 @@ public class BookService {
     public Page<BookEntity> getPageOfSearchResultsBooks(String searchWord, Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findBookEntitiesByTitleContaining(searchWord, nextPage);
+    }
+
+    public Page<BookEntity> getPageOfRecentBooks(
+            LocalDate start, LocalDate end, Integer offset, Integer limit){
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findBookEntitiesByPubDateBetween(start, end, nextPage);
+    }
+
+    public Page<BookEntity> getPageOfBooksByTag(Integer offset, Integer limit, Integer id){
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findBookEntitiesByTagId(id, nextPage);
+    }
+
+    public Page<BookEntity> getPageOfBooksByGenre(Integer offset, Integer limit, String slug){
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findBookEntitiesByGenreSlug(slug, nextPage);
+    }
+
+    public Page<BookEntity> getPageOfBooksByAuthorSlug(Integer offset, Integer limit, String slug){
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findBookEntitiesByAuthor_Slug(slug, nextPage);
     }
 }

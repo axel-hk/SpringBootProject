@@ -2,7 +2,7 @@ package com.example.mybookshopapp.data;
 
 public class SearchWordDto {
 
-    private String example;
+    private String example = "";
     public SearchWordDto(){};
 
     public SearchWordDto(String example) {

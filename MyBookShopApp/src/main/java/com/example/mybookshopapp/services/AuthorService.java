@@ -20,4 +20,8 @@ public class AuthorService {
     public List<AuthorEntity> getAuthorData(){
         return authorRepository.findAll();
     }
+
+    public AuthorEntity getAuthorBySlug(String slug) {
+        return authorRepository.getAuthorEntityBySlug(slug);
+    }
 }
