@@ -11,6 +11,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
 
@@ -41,7 +42,7 @@ public class BooksRatingAndPopularityService {
         List<Object[]> results = query.getResultList();
 
 
-        List<BookEntity> bookList = results.stream().map(b -> bookRepository.findBookEntitiesById((Integer)b[0])).toList();
+        List<BookEntity> bookList = bookRepository.findBookEntitiesByIdIn(results.stream().map(b -> (Integer) b[0]).collect(Collectors.toList()));
 
         PagedListHolder<BookEntity> pagedListHolder = new PagedListHolder<>(bookList);
         pagedListHolder.setPageSize(limit); // Number of elements per page
