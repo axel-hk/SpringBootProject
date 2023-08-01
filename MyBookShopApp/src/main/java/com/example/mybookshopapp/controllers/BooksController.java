@@ -3,9 +3,11 @@ package com.example.mybookshopapp.controllers;
 import com.example.mybookshopapp.data.dto.BooksPageDto;
 import com.example.mybookshopapp.services.BookService;
 import com.example.mybookshopapp.services.BooksRatingAndPopularityService;
+import com.example.mybookshopapp.services.TagService;
 import com.example.mybookshopapp.struct.book.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,11 +20,14 @@ public class BooksController {
 
     private final BookService bookService;
 
+    private final TagService tagService;
+
     private final BooksRatingAndPopularityService booksRatingAndPopularityService;
     @Autowired
     public BooksController(BookService bookService,
-                           BooksRatingAndPopularityService booksRatingAndPopularityService) {
+                           TagService tagService, BooksRatingAndPopularityService booksRatingAndPopularityService) {
         this.bookService = bookService;
+        this.tagService = tagService;
         this.booksRatingAndPopularityService = booksRatingAndPopularityService;
     }
 
@@ -54,6 +59,12 @@ public class BooksController {
         return "/books/popular";
     }
 
+    @GetMapping("/recommended")
+    @ResponseBody
+    public BooksPageDto getRecommendedBooks(@RequestParam("offset") Integer offset,
+                                            @RequestParam("limit") Integer limit){
+        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset,limit).getContent());
+    }
     @GetMapping("/recent/page")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam ("from") String from,
@@ -70,6 +81,14 @@ public class BooksController {
             @RequestParam("offset") Integer offset,
             @RequestParam("limit") Integer limit){
         return new BooksPageDto(booksRatingAndPopularityService.getPageOfPopBook(offset, limit));
+    }
+
+    @GetMapping("/{slug}")
+    public String bookPage(@PathVariable("slug") String slug, Model model){
+        BookEntity book = bookService.getBookBySlug(slug);
+        model.addAttribute("slugBook", book);
+        //model.addAttribute("tags", tagService.getTagsByBookSlug(slug));
+        return "/books/slug";
     }
 
 }

@@ -37,4 +37,8 @@ public class TagService {
     public TagEntity getTag(int id) {
        return tagRepository.getTagEntityById(id);
     }
+
+    public List<String> getTagsByBookSlug(String slug) {
+        return tagRepository.findTagsByBookSlug(slug);
+    }
 }

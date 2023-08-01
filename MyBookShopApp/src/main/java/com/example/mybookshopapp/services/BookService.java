@@ -59,7 +59,9 @@ public class BookService {
     }
 
     //new book service methods
-
+    public BookEntity getBookBySlug(String slug) {
+        return bookRepository.findBookEntityBySlug(slug);
+    }
     public List<BookEntity> getBooksByAuthor(String authorName){
         return bookRepository.findBookEntitiesByAuthorNameContaining(authorName);
     }

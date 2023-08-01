@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class BooksRatingAndPopularityService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Value("${spring.jpa.properties.hibernate.default_schema}")
+    private String schema;
+
 
     public  List<BookEntity> getPageOfPopBook(Integer offset, Integer limit) {
         String queryString = "SELECT " +
@@ -32,8 +36,8 @@ public class BooksRatingAndPopularityService {
                 "     0.4 * COUNT(DISTINCT CASE WHEN but.code = 'KEPT' THEN bu.user_id  END) + " +
                 "     0.2 *  COUNT(DISTINCT CASE WHEN but.code = 'ARCHIVED' THEN bu.user_id  END) AS popularity " +
                 "FROM " +
-                "book2user bu " +
-                "    INNER JOIN book2user_type but  ON bu.type_id  = but.id " +
+                schema+".book2user bu " +
+                "    INNER JOIN " +schema+".book2user_type but  ON bu.type_id  = but.id " +
                 "GROUP BY " +
                 "    bu.book_id " +
                 "order by  popularity DESC";

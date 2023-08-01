@@ -19,6 +19,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     BookEntity findBookEntitiesById(Integer id);
 
+    BookEntity findBookEntityBySlug(String slug);
+
     List<BookEntity> findBookEntitiesByIdIn(List<Integer> id);
 
     //NEW BOOK REST REPOSISITORY COMMANDS
