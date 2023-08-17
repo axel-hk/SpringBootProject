@@ -1,14 +1,14 @@
 package com.example.mybookshopapp.struct.book;
 
 import com.example.mybookshopapp.struct.author.AuthorEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.mybookshopapp.struct.book.file.BookFileEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.stereotype.Controller;
 
 import java.sql.Date;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="books")
@@ -47,6 +47,16 @@ public class BookEntity {
     @Schema(description = "books discount")
     private short discount;
 
+    public List<BookFileEntity> getBookFileList() {
+        return bookFileEntityList;
+    }
+
+    public void setBookFileEntityList(List<BookFileEntity> bookFileEntityList) {
+        this.bookFileEntityList = bookFileEntityList;
+    }
+
+    @OneToMany(mappedBy = "book")
+    private List<BookFileEntity> bookFileEntityList = new ArrayList<>();
     public AuthorEntity getAuthor() {
         return author;
     }

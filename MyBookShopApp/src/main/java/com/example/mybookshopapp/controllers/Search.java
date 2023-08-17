@@ -2,6 +2,7 @@ package com.example.mybookshopapp.controllers;
 
 import com.example.mybookshopapp.data.SearchWordDto;
 import com.example.mybookshopapp.data.dto.BooksPageDto;
+import com.example.mybookshopapp.exceptions.EmptySearchException;
 import com.example.mybookshopapp.services.BookService;
 import com.example.mybookshopapp.struct.book.BookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,18 @@ public class Search {
         this.bookService = bookService;
     }
 
-    @GetMapping(value ={ "/search","/search/{searchWord}"})
+    @GetMapping(value ={ "/search","/search/","/search/{searchWord}"})
     public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                   Model model){
-       model.addAttribute("searchWordDto", searchWordDto);
-       model.addAttribute("searchResults", bookService.getPageOfSearchResultsBooks(searchWordDto.getExample(), 0, 5).getContent());
+                                   Model model) throws EmptySearchException {
+       if(searchWordDto != null) {
+           model.addAttribute("searchWordDto", searchWordDto);
+           model.addAttribute("searchResults", bookService.getPageOfSearchResultsBooks(searchWordDto.getExample(), 0, 5).getContent());
 
-       return "/search/index";
+           return "/search/index";
+       }
+       else {
+           throw new EmptySearchException("Поиск по null невозможен");
+       }
     }
 
     @GetMapping("/search/page/{searchWord}")
