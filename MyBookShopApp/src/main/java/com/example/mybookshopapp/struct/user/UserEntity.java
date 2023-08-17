@@ -1,7 +1,10 @@
 package com.example.mybookshopapp.struct.user;
 
+import com.example.mybookshopapp.struct.book.review.BookReviewEntity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -23,6 +26,16 @@ public class UserEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
+    public List<BookReviewEntity> getReviewEntityList() {
+        return reviewEntityList;
+    }
+
+    public void setReviewEntityList(List<BookReviewEntity> reviewEntityList) {
+        this.reviewEntityList = reviewEntityList;
+    }
+
+    @OneToMany(mappedBy = "user")
+    List<BookReviewEntity> reviewEntityList = new ArrayList<BookReviewEntity>();
     public int getId() {
         return id;
     }

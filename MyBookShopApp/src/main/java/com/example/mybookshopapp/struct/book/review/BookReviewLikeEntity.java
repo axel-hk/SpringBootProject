@@ -1,5 +1,6 @@
 package com.example.mybookshopapp.struct.book.review;
 
+import com.example.mybookshopapp.struct.book.BookEntity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,9 +13,6 @@ public class BookReviewLikeEntity {
     private int id;
 
     @Column(columnDefinition = "INT NOT NULL")
-    private int reviewId;
-
-    @Column(columnDefinition = "INT NOT NULL")
     private int userId;
 
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
@@ -22,6 +20,18 @@ public class BookReviewLikeEntity {
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
+
+    public BookReviewEntity getReview() {
+        return review;
+    }
+
+    public void setReview(BookReviewEntity review) {
+        this.review = review;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "review_id")
+    private BookReviewEntity review;
 
     public int getId() {
         return id;
@@ -31,13 +41,6 @@ public class BookReviewLikeEntity {
         this.id = id;
     }
 
-    public int getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
-    }
 
     public int getUserId() {
         return userId;

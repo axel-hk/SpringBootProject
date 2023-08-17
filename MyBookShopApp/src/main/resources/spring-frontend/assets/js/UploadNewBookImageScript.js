@@ -1,7 +1,7 @@
-$('#uploadButton').on('click', function(){
-    $('dialog').trigger("click");
+$('#uploadButton').on('click', function () {
+    $('#dialog').trigger('click');
 });
 
-$('dialog').on("change", function(){
-    $('imgForm').submit();
-})
+$('#dialog').on('change', function () {
+    $('#imgForm').submit();
+});

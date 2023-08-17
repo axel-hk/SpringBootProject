@@ -1,6 +1,8 @@
 package com.example.mybookshopapp.struct.book.file;
 
+import com.example.mybookshopapp.struct.book.BookEntity;
 import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "book_file")
@@ -18,6 +20,18 @@ public class BookFileEntity {
 
     @Column(nullable = false)
     private String path;
+
+    public BookEntity getBook() {
+        return book;
+    }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private BookEntity book;
 
     public Integer getId() {
         return id;
@@ -49,5 +63,9 @@ public class BookFileEntity {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getBookFileExtensionString(){
+        return BoolFileType.getFileExtensionByTypeId(typeId);
     }
 }
