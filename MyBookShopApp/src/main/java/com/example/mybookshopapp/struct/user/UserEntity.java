@@ -26,6 +26,28 @@ public class UserEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
+    public UserContactEntity getContact() {
+        return contact;
+    }
+
+    public void setContact(UserContactEntity contact) {
+        this.contact = contact;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    UserContactEntity contact;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Column
+    private String password;
+
     public List<BookReviewEntity> getReviewEntityList() {
         return reviewEntityList;
     }

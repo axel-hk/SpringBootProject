@@ -13,10 +13,18 @@ public class UserContactEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int userId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity user;
 
-    private ContactType type;
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short approved;
@@ -30,8 +38,26 @@ public class UserContactEntity {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime codeTime;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String contact;
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Column
+    private String phone;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Column
+    private String email;
 
     public int getId() {
         return id;
@@ -39,22 +65,6 @@ public class UserContactEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public ContactType getType() {
-        return type;
-    }
-
-    public void setType(ContactType type) {
-        this.type = type;
     }
 
     public short getApproved() {
@@ -89,11 +99,4 @@ public class UserContactEntity {
         this.codeTime = codeTime;
     }
 
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
 }
