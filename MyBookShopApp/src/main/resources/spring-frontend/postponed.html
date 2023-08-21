@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="/assets/css/basic.min.css?v=04238027">
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=04238027">
     <script defer src="/assets/js/scripts.min.js?v=04238027"></script>
+    <meta id="_csrf" name = "_crf" th:content="${_csrf.token}" />
+    <meta id="_csrf_header" name = "_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body class="Site">
 <header th:replace="~{fragments/header_fragment :: headFragment}"></header>

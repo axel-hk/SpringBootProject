@@ -52,6 +52,12 @@ public class RegistationService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
         response.setResult(true);
+
         return response;
+    }
+
+    public UserEntity getCurrentUser() {
+        BookStoreUserDetails userDetailsService = (BookStoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetailsService.getUser();
     }
 }
