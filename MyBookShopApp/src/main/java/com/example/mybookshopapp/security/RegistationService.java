@@ -1,6 +1,7 @@
 package com.example.mybookshopapp.security;
 
 import com.example.mybookshopapp.data.repositories.UsersRepository;
+import com.example.mybookshopapp.security.jwt.JWTUtil;
 import com.example.mybookshopapp.struct.user.UserContactEntity;
 import com.example.mybookshopapp.struct.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,18 @@ public class RegistationService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final BookStoreUserDetailsService bookStoreUserDetailsService;
+
+    private final JWTUtil jwtUtil;
+
+
     @Autowired
-    public RegistationService(UsersRepository usersRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public RegistationService(UsersRepository usersRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, BookStoreUserDetailsService bookStoreUserDetailsService, JWTUtil jwtUtil) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.bookStoreUserDetailsService = bookStoreUserDetailsService;
+        this.jwtUtil = jwtUtil;
     }
 
     public void regNewUser(RegisterForm registerForm) {
@@ -51,9 +59,19 @@ public class RegistationService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
-        response.setResult(true);
+        response.setResult("true");
 
         return response;
+    }
+
+    public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(),
+                payload.getCode()));
+        BookStoreUserDetails userDetails = (BookStoreUserDetails) bookStoreUserDetailsService.loadUserByUsername(payload.getContact());
+        String jwtToken = jwtUtil.generateToken(userDetails);
+        ContactConfirmationResponse response = new ContactConfirmationResponse();
+        response.setResult(jwtToken);
+        return  response;
     }
 
     public UserEntity getCurrentUser() {
