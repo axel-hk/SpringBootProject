@@ -17,6 +17,10 @@ public class AuthUserController {
     public AuthUserController(RegistationService registationService) {
         this.registationService = registationService;
     }
+    @GetMapping("/signin")
+    public String signin(){
+        return "signin";
+    }
 
     @GetMapping("/signup")
     public String handleSignUp(Model model){
